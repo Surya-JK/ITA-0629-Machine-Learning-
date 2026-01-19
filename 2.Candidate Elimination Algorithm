@@ -1,0 +1,43 @@
+import csv
+
+def get_data(filename):
+    with open(filename) as f:
+        reader = csv.reader(f)
+        next(reader)
+        return [row for row in reader]
+
+def candidate_elimination(data):
+    s = data[0][:-1]
+    g = [['?' for _ in range(len(s))]]
+    
+    for row in data:
+        attr = row[:-1]
+        target = row[-1]
+        
+        if target == 'Yes':
+            for i in range(len(s)):
+                if s[i] != attr[i]:
+                    s[i] = '?'
+            g = [h for h in g if all(h[i] == '?' or h[i] == attr[i] for i in range(len(h)))]
+        
+        if target == 'No':
+            new_g = []
+            for h in g:
+                if all(h[i] == '?' or h[i] == attr[i] for i in range(len(h))):
+                    for i in range(len(h)):
+                        if s[i] != '?' and s[i] != attr[i]:
+                            temp = h.copy()
+                            temp[i] = s[i]
+                            if temp not in new_g:
+                                new_g.append(temp)
+                else:
+                    new_g.append(h)
+            g = new_g
+            
+    return s, g
+
+data = get_data('data.csv')
+s_final, g_final = candidate_elimination(data)
+
+print("Final Specific Hypothesis:", s_final)
+print("Final General Hypotheses:", g_final)
