@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# 1. Create Synthetic Data (e.g., Experience vs Salary)
+X = np.array([[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]])
+y = np.array([30000, 35000, 40000, 55000, 60000, 75000, 80000, 85000, 95000, 105000])
+
+# 2. Train Model
+model = LinearRegression()
+model.fit(X, y)
+
+# 3. Predict
+y_pred = model.predict(X)
+
+# 4. Display Coefficients
+print(f"Coefficient (Slope): {model.coef_[0]:.2f}")
+print(f"Intercept: {model.intercept_:.2f}")
+
+# 5. Plot
+plt.scatter(X, y, color='blue', label='Actual Data')
+plt.plot(X, y_pred, color='red', label='Regression Line')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.title('Simple Linear Regression')
+plt.legend()
+plt.show()
