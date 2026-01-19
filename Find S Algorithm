@@ -1,0 +1,22 @@
+def find_s_algorithm(data):
+    num_attributes = len(data[0]) - 1
+    hypothesis = ['0'] * num_attributes
+
+    for instance in data:
+        if instance[-1] == 'Yes':
+            for j in range(num_attributes):
+                if hypothesis[j] == '0':
+                    hypothesis[j] = instance[j]
+                elif hypothesis[j] != instance[j]:
+                    hypothesis[j] = '?'
+    return hypothesis
+
+dataset = [
+    ['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same', 'Yes'],
+    ['Sunny', 'Warm', 'High',   'Strong', 'Warm', 'Same', 'Yes'],
+    ['Rainy', 'Cold', 'High',   'Strong', 'Warm', 'Change', 'No'],
+    ['Sunny', 'Warm', 'High',   'Strong', 'Cool', 'Change', 'Yes']
+]
+
+final_hypothesis = find_s_algorithm(dataset)
+print(final_hypothesis)
